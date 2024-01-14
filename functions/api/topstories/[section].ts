@@ -1,23 +1,37 @@
-
 import * as dotenv from "dotenv";
-
+import type { Root } from "../../types";
+import type { PagesFunction } from "@cloudflare/workers-types";
+import { jsonResponse } from "../../utils/jsonResponse";
 dotenv.config();
-export function Section({ section }: { section: string }) {
-  const apiKey = process.env.NYT_API_KEY;
-  console.log("apiKey", apiKey);
+
+export const onRequestGet = async ({ request, section }) => {
+  const NYT_API_KEY = process.env.NYT_API_KEY;
   const options = {
     method: "GET",
-    url: `https://api.nytimes.com/svc/topstories/v2/${section}.json?api-key=${apiKey}`,
     headers: {
       Accept: "application/json",
     },
+    form: {},
   };
-  request(
-    options.url,
-    options,
-    function (error: string | undefined, response: { body: any }) {
-      if (error) throw new Error(error);
-      return console.log(response.body);
-    }
-  );
-}
+  try {
+    const response = await fetch(
+      `https://api.nytimes.com/svc/topstories/v2/${section}.json?api-key=${NYT_API_KEY}`,
+      options
+    );
+
+    const data: Root = await response.json();
+
+    return jsonResponse(data);
+  } catch (e) {
+    console.error(e);
+    return jsonResponse(
+      {
+        error:
+          "Something went wrong on New York Times' end. Please try again later.",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+};

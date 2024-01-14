@@ -1,7 +1,10 @@
 import { jsonResponse } from "../../utils/jsonResponse";
 import { parseFormDataRequest } from "../../utils/parseFormDataRequest";
 import { IMAGE_KEY_PREFIX } from "../../utils/constants";
-import type { KVNamespace, DurableObjectNamespace } from "@cloudflare/workers-types";
+import type {
+  KVNamespace,
+  DurableObjectNamespace,
+} from "@cloudflare/workers-types";
 
 export const onRequestPost: PagesFunction<{
   IMAGES: KVNamespace;
