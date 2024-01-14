@@ -11,7 +11,7 @@ interface RouteCommon {
   ErrorBoundary?: React.ComponentType<any>;
 }
 
-interface IRoute extends RouteCommon{
+interface IRoute extends RouteCommon {
   path: string;
   Element: React.ComponentType<any>;
 }
@@ -19,7 +19,7 @@ interface IRoute extends RouteCommon{
 interface Pages {
   [key: string]: {
     default: React.ComponentType<any>;
-  } & RouteCommon
+  } & RouteCommon;
 }
 
 const pages: Pages = import.meta.glob("./app/**/*.tsx", { eager: true });
@@ -27,13 +27,21 @@ const pages: Pages = import.meta.glob("./app/**/*.tsx", { eager: true });
 const routes: IRoute[] = [];
 for (const path of Object.keys(pages)) {
   const fileName = path.match(/\.\/app\/(.*)\.tsx$/)?.[1];
+
   if (!fileName) {
     continue;
   }
 
-  const normalizedPathName = fileName.includes("$")
-    ? fileName.replace("$", ":")
-    : fileName.replace(/\/page/, "");
+
+  const normalizedPathName = fileName 
+    ? fileName.includes("[")
+    ? fileName
+        .split("/")
+        .map((segment) => segment.replace(/\[/g, ":").replace(/\]/g, ""))
+        .join("/")
+    : fileName.replace(/\/page/, "") 
+    : fileName;
+  console.log("normalizedPathName:", normalizedPathName);
 
   routes.push({
     path: fileName === "page" ? "/" : `/${normalizedPathName.toLowerCase()}`,
@@ -42,6 +50,8 @@ for (const path of Object.keys(pages)) {
     action: pages[path]?.action as ActionFunction | undefined,
     ErrorBoundary: pages[path]?.ErrorBoundary,
   });
+
+  console.log("routes:", routes);
 }
 
 const router = createBrowserRouter(
@@ -53,6 +63,7 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
+
   return <RouterProvider router={router} />;
 };
 
