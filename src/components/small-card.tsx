@@ -6,27 +6,27 @@ export default function SmallCard({
 }: {
   title: string;
   description?: string;
-  image: string;
+  image?: string;
   link: string;
 }) {
   return (
-    <>
-      <div className="flex flex-col items-center justify-center max-w-sm mx-auto mb-5 border rounded-lg shadow-lg">
+    <a href={link}>
+      <div className="flex flex-col md:flex-row py-4 gap-6 border-b">
+        <div className="flex flex-col pr-5 md:gap-4 gap-2">
+          <h1 className=" text-xl font-bold font-chelten-500 text-start">
+            {title}
+          </h1>
+          {description && (
+            <p className="font-chelten-200 font-light text-sm text-start">
+              {description}
+            </p>
+          )}
+        </div>
         <div
-          className="flex flex-col items-center justify-center w-full h-64 bg-cover rounded-t-lg"
+          className="flex flex-col items-center justify-center w-full bg-cover min-h-60"
           style={{ backgroundImage: `url(${image})` }}
         ></div>
-        <div className="flex flex-col items-center justify-center w-full p-5">
-          <h1 className="mb-4 text-xl font-bold text-center">{title}</h1>
-         { description && <p className="mb-4 text-center">{description}</p>}
-          <a
-            href={link}
-            className="px-4 py-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600"
-          >
-            Learn More
-          </a>
-        </div>
       </div>
-    </>
+    </a>
   );
 }
