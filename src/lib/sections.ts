@@ -40,6 +40,7 @@ export const USSections = [
     "The Magazine",
 ]
 
+// TODO: get this out of API
 export const USPolitics = [
     "2024 Election",
     "Supreme Court",
@@ -47,6 +48,7 @@ export const USPolitics = [
     "Biden Administration"
 ]
 
+// TODO: get this out of API
 export const USTopStories = [
     "Trump Investigations",
     "The Eric Adams Administration",

@@ -4,11 +4,11 @@ import { Search } from "lucide-react";
 export default function TopNav() {
   return (
     <>
-      <div className="md:flex justify-between hidden content-center items-center">
+      <div className="md:grid md:grid-flow-col md:grid-cols-3 justify-between hidden content-center items-center">
         <span>
           <Search className="w-4 h-4" />
         </span>
-        <div className="flex md:gap-4">
+        <div className="flex md:gap-4 justify-evenly">
           {" "}
           {topNav.map((item, index) => (
             <a
@@ -23,7 +23,7 @@ export default function TopNav() {
             </a>
           ))}
         </div>
-        <span className="flex gap-4">
+        <span className="flex gap-4 justify-end">
           {topNavButton.map((item, index) => (
             <a
               key={index}
@@ -39,6 +39,6 @@ export default function TopNav() {
   );
 }
 
-const topNavButton = ["Submit story", "Sign In"];
+const topNavButton = ["Submit a story", "Sign In"];
 
 const topNav = ["U.S.", "International", "Canada", "Español", "中文"];
