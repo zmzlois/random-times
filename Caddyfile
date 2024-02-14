@@ -1,0 +1,5 @@
+:8080 {
+	root ./dist
+    try_files ./dist/index.html
+    file_server
+}
