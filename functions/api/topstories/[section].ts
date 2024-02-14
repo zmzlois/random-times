@@ -1,4 +1,4 @@
-import * as dotenv from "dotenv";
+import * as dotenv from "node:dotenv";
 import type { Root } from "../../types";
 import type { PagesFunction } from "@cloudflare/workers-types";
 import { jsonResponse } from "../../utils/jsonResponse";
